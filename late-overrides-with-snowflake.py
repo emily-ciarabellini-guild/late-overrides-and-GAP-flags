@@ -36,7 +36,7 @@ SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS = connection.execute_string(
     """
     )
 
-SQL_STUDENT_TERM_LINE_ITEMS = connection.execute_string(
+SQL_STUDENT_TERM_LINE_ITEMS_UUID = connection.execute_string(
     """
     SELECT DISTINCT 
         CONCAT(TERM_CODE,'_', GUILD_UUID) AS KEY, 
@@ -50,15 +50,30 @@ SQL_STUDENT_TERM_LINE_ITEMS = connection.execute_string(
     """
     )
 
+SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID = connection.execute_string(
+    """
+    SELECT DISTINCT 
+        CONCAT(TERM_CODE,'_', PARTNER_STUDENT_ID) AS KEY, 
+        MAX(LIS.SET_ON)
+    FROM TA_ORCHESTRATOR_PUBLIC.STUDENT_TERM_LINE_ITEMS STLI
+    JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.LINE_ITEM_STATES LIS ON LIS.STUDENT_TERM_LINE_ITEM_ID = STLI.ID
+    JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.PAYMENT_DECISIONS PD on PD.ID = STLI.CURRENT_PAYMENT_DECISION_ID
+    WHERE LIS.NAME = 'Committed'
+    AND STLI.CURRENT_STATE_NAME = 'Committed'
+    GROUP BY KEY
+    """
+    )
+
+
 SQL_TUITION_ELIGIBILITY_OVERRIDES = connection.execute_string(
     """
     SELECT 
         CONCAT(O.TERM_CODE,'_', O.STUDENT_EXTERNAL_ID) as key,
+        O.UPDATED_AT, 
         U.LAST_NAME as Override_Logged_By,
         AP.NAME as AP_NAME,
         O.REASON, 
         O.TUITION_ELIGIBLE, 
-        O.UPDATED_AT, 
         O.STUDENT_EXTERNAL_ID, 
         O.TERM_CODE, 
         O.COMMENT, 
@@ -79,18 +94,67 @@ for x in SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS:
       flag.extend([uniqueKey, row[4], row[13], row[2]])
       gapFlags.append(flag) 
 
-mlbSTLIs = [['KEY', 'MAX(UPDATED_AT)']]
-for x in SQL_STUDENT_TERM_LINE_ITEMS:
+mlbSTLIs_UUID = [['KEY', 'MAX(UPDATED_AT)']]
+for x in SQL_STUDENT_TERM_LINE_ITEMS_UUID:
    for row in x:
       stli = []
       stli.extend([row[0], row[1]])
-      mlbSTLIs.append(stli) 
+      mlbSTLIs_UUID.append(stli)
 
-tuitionOverrides = [['KEY', 'OVERRIDE_LOGGED_BY', 'AP_NAME', 'REASON', 'TUITION_ELIGIBLE', 'UPDATED_AT', 'STUDENT_EXTERNAL_ID', 'TERM_CODE', 'COMMENT', 'MP SEARCH URL' ]]
+mlbSTLIs_StudentID = [['KEY', 'MAX(UPDATED_AT)']]
+for x in SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID:
+   for row in x:
+      stli = []
+      stli.extend([row[0], row[1]])
+      mlbSTLIs_StudentID.append(stli)
+ 
+tuitionOverrides = [['KEY', 'UPDATED_AT', 'OVERRIDE_LOGGED_BY', 'AP_NAME', 'REASON', 'TUITION_ELIGIBLE', 'STUDENT_EXTERNAL_ID', 'TERM_CODE', 'COMMENT', 'MP SEARCH URL' ]]
 for x in SQL_TUITION_ELIGIBILITY_OVERRIDES:
     for row in x:
         override = []
-        tuitionOverrides.append(row)
+        override.extend([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]])  # turns row into a list
+        tuitionOverrides.append(override)
+
+
+def createListfromCSV(csvFileName):
+    """
+    Takes a csv file as an argument and returns a list.
+    File name argument is formatted as a string with .csv. Example: 'overrides.csv'
+    """ 
+    file=open(csvFileName)
+    new_list = list(csv.reader(file))
+    return new_list
+
+
+# def combineLists(list1, list2):
+#     """
+#     Combines two lists where the values are dates. This function
+#     maintains the value where the date is the most recent for a given key 
+#     when there are duplicate keys across the two dictionaries. 
+#     """ 
+#     newList = list1 | list2
+#     for k in newList:
+#         if k in list1 and k in list2:
+#             if list1[k] > list2[k]:
+#                 newList[k] = list1[k]
+#             else:
+#                 newList[k] = list2[k]
+#     return newList
+
+
+
+def excludePermissables(permissables,overrides):
+    """
+    Takes one list (permissables) and one table (overrides) as parameters and 
+    returns a new version of the overrides table that excludes items on the list. 
+    Overrides contain the key in the first column that match the items in the 
+    permissible list.
+    """
+    result = []
+    for n in overrides:
+        if [n[0]] not in permissables:
+            result.append(n)
+    return result
 
 
 def lateOverrideCheck(overrides, lines):
@@ -121,11 +185,27 @@ def writeToCSV(list,filename):
         wrapper.writerow(i)
     file.close()
 
-gapResult = lateOverrideCheck(gapFlags,mlbSTLIs)
-gapHeader = gapFlags[0]
-gapResult.insert(0,gapHeader)
-writeToCSV(gapResult,'_gapResults.csv')
-print("Count of late GAP flags is: ", len(gapResult)-1)
+permissables = createListfromCSV('Permissables.csv')
+ta1List = createListfromCSV('TA1.csv')  #Ideally pull this TA1.0 and IM data from snowflake as well? .......................................................................................................................................................
+imList = createListfromCSV('invoicemanagement_lines.csv') #Ideally pull this TA1.0 and IM data from snowflake as well? ....................................................................................................................................
 
-# overridesResult = lateOverrideCheck(tuitionOverrides, mlbSTLIs)
-# writeToCSV(overridesResult[0],'overridesResults.csv')
+
+
+# gapResult = lateOverrideCheck(gapFlags,mlbSTLIs_UUID)  # Need to change this to also review TA 1.0 and IM line items. make sure not to exclude permissables for GAP.........................................................................................
+# gapHeader = gapFlags[0]
+# gapResult.insert(0,gapHeader)
+# writeToCSV(gapResult,'_gapResults.csv')
+# print("Count of late GAP flags is: ", len(gapResult)-1)
+
+overridesMinusPermissables = excludePermissables(permissables,tuitionOverrides)
+overridesResult1 = lateOverrideCheck(overridesMinusPermissables, mlbSTLIs_StudentID)
+overrideHeader = tuitionOverrides[0]
+overridesResult1.insert(0,overrideHeader)
+writeToCSV(overridesResult1,'_overridesResults.csv')
+print("Count of late overrides is: ", len(overridesResult1)-1)
+##need to incorporate 1.0, Invoice Management, and Permissibles in the late override
+
+# x=0
+# while x < 10:
+#     print(ta1List[x])
+#     x+=1
