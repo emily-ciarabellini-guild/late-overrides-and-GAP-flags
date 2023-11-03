@@ -2,7 +2,6 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 import snowflake.connector
-from snowflake.connector import DictCursor
 import csv
 import datetime
 import pandas as pd
@@ -77,9 +76,28 @@ SQL_INVOICE_MGMT = connection.execute_string(
     """
     )
 
+SQL_INVOICE_MGMT_UUID = connection.execute_string(
+    """
+    SELECT DISTINCT CONCAT(TLI.TERM_CODE,'_', SLI.GUILD_UUID) AS KEY, MAX(I.UPDATED_AT)
+    FROM TA_ORCHESTRATOR_PUBLIC.TERM_LINE_ITEMS TLI
+    JOIN TA_ORCHESTRATOR_PUBLIC.STUDENT_LINE_ITEMS SLI ON SLI.ID = TLI.STUDENT_LINE_ITEM_ID
+    JOIN TA_ORCHESTRATOR_PUBLIC.INVOICES I ON I.ID = SLI.INVOICE_ID
+    WHERE I.STATE = 'COMMITTED'
+    GROUP BY KEY
+    """
+    )
+
 SQL_TA1 = connection.execute_string(
     """
     SELECT DISTINCT CONCAT(TERM_CODE,'_', PARTNER_STUDENT_ID) AS KEY, MAX(BENEFIT_LOCKED_ON)
+    FROM TA_ORCHESTRATOR_PUBLIC.LEGACY_SALESFORCE_LINE_ITEMS SFLI
+    GROUP BY KEY
+    """
+    )
+
+SQL_TA1_UUID = connection.execute_string(
+    """
+    SELECT DISTINCT CONCAT(TERM_CODE,'_', GUILD_UUID) AS KEY, MAX(BENEFIT_LOCKED_ON)
     FROM TA_ORCHESTRATOR_PUBLIC.LEGACY_SALESFORCE_LINE_ITEMS SFLI
     GROUP BY KEY
     """
@@ -105,28 +123,6 @@ SQL_TUITION_ELIGIBILITY_OVERRIDES = connection.execute_string(
     """
     )
 
-
-gapFlags = [['TERM_CODE_GUILD_UUID_', 'CREATED_AT', 'APPROVED_AMOUNT_CENTS', 'DESCRIPTION']]
-for x in SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS:
-   for row in x:
-      flag = []
-      uniqueKey = row[3]+'_'+row[0]
-      flag.extend([uniqueKey, row[4], row[13], row[2]])
-      gapFlags.append(flag) 
-
-mlbSTLIs_UUID = [['KEY', 'MAX(UPDATED_AT)']]
-for x in SQL_STUDENT_TERM_LINE_ITEMS_UUID:
-   for row in x:
-      stli = []
-      stli.extend([row[0], row[1]])
-      mlbSTLIs_UUID.append(stli)
-
-tuitionOverrides = [['KEY', 'UPDATED_AT', 'OVERRIDE_LOGGED_BY', 'AP_NAME', 'REASON', 'TUITION_ELIGIBLE', 'STUDENT_EXTERNAL_ID', 'TERM_CODE', 'COMMENT', 'MP SEARCH URL' ]]
-for x in SQL_TUITION_ELIGIBILITY_OVERRIDES:
-    for row in x:
-        override = []
-        override.extend([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]])  # turns row into a list
-        tuitionOverrides.append(override)
 
 
 def createDictfromCursor(cursor):
@@ -184,23 +180,6 @@ def excludePermissables(permissables,overrides):
     return result
 
 
-def lateOverrideCheck(overrides, lines):
-    """
-    Compares date of logged overrides/GAP flags to the date of the committed line item for the
-    given term_studentID key. If the override date is after the line item date,
-    the override is added to the late override list. This function
-    returns a list of the late override list.
-    """ 
-    lateOverrideslist = []
-
-    for ovrd in overrides:
-        for line in lines:
-            if ovrd[0] == line[0]:
-                if ovrd[1] > line[1]:
-                    lateOverrideslist.append(ovrd)
-    return lateOverrideslist
-
-
 def lateOverrideCheckWdict(overrides, linesDict):
     """
     Compares date of logged overrides to the date of the committed line item for the
@@ -234,17 +213,45 @@ def writeToCSV(list,filename):
         wrapper.writerow(i)
     file.close()
 
+
+gapFlags = [['TERM_CODE_GUILD_UUID_', 'CREATED_AT', 'APPROVED_AMOUNT_CENTS', 'DESCRIPTION']]
+for x in SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS:
+   for row in x:
+      flag = []
+      uniqueKey = row[3]+'_'+row[0]
+      flag.extend([uniqueKey, row[4], row[13], row[2]])
+      gapFlags.append(flag) 
+
+
+tuitionOverrides = [['KEY', 'UPDATED_AT', 'OVERRIDE_LOGGED_BY', 'AP_NAME', 'REASON', 'TUITION_ELIGIBLE', 'STUDENT_EXTERNAL_ID', 'TERM_CODE', 'COMMENT', 'MP SEARCH URL' ]]
+for x in SQL_TUITION_ELIGIBILITY_OVERRIDES:
+    for row in x:
+        override = []
+        override.extend([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]])  # turns row into a list
+        tuitionOverrides.append(override)
+
+
+# create & combine dictionaries from line item data with UUIDs for GAP Flags comparison
+mlbSTLIs_UUID = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_UUID)
+InvMgmt_dict_UUID = createDictfromCursor(SQL_INVOICE_MGMT_UUID)
+TA1_dict_UUID = createDictfromCursor(SQL_TA1_UUID)
+TA1_imDict_UUID = combineDicts(TA1_dict_UUID,InvMgmt_dict_UUID)
+allLinesDict_UUID = combineDicts(TA1_imDict_UUID,mlbSTLIs_UUID )
+
+gapResult = lateOverrideCheckWdict(gapFlags,allLinesDict_UUID) 
+gapHeader = gapFlags[0]
+lateGAP = gapResult[0]
+lateGAP.insert(0,gapHeader)
+writeToCSV(lateGAP,'_gapResults.csv')
+print("Count of late GAP flags is: ", len(lateGAP)-1)
+
+
+# create & combine dictionaries from line item data with Student IDs for Tuition Overrides comparison
 mlbSTLIs_SID_dict = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID)
 InvMgmt_dict = createDictfromCursor(SQL_INVOICE_MGMT)
 TA1_dict = createDictfromCursor(SQL_TA1)
-ta1_imDict = combineDicts(TA1_dict,InvMgmt_dict)
-allLinesDict = combineDicts(ta1_imDict,mlbSTLIs_SID_dict)
-
-gapResult = lateOverrideCheck(gapFlags,mlbSTLIs_UUID)  #  GAP flags do not contain UUID, so this check is based on UUID ............... need to see if can pull in TA 1.0 and IM data with UUID...............
-gapHeader = gapFlags[0]
-gapResult.insert(0,gapHeader)
-writeToCSV(gapResult,'_gapResults.csv')
-print("Count of late GAP flags is: ", len(gapResult)-1)
+TA1_imDict = combineDicts(TA1_dict,InvMgmt_dict)
+allLinesDict = combineDicts(TA1_imDict,mlbSTLIs_SID_dict)
 
 permissables = createListfromCSV('Permissables.csv')
 overridesMinusPermissables = excludePermissables(permissables,tuitionOverrides)
