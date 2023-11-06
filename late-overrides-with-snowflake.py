@@ -32,8 +32,15 @@ schema   = SF_SCHEMA)
 
 SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS = connection.execute_string(
     """
-    SELECT * 
-    FROM GUILD.TA_ORCHESTRATOR_PUBLIC.GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS 
+    SELECT  
+        CONCAT(G.TERM_CODE,'_',G.GUILD_UUID) KEY,
+        G.CREATED_AT,
+        AP.NAME,
+        G.APPROVED_AMOUNT*.01,
+        G.DESCRIPTION,
+        CONCAT('https://ta-admin.guildeducation.com/member-payments/',G.GUILD_UUID)
+    FROM GUILD.TA_ORCHESTRATOR_PUBLIC.GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS G
+    JOIN GUILD.ACADEMIC_SERVICE_V2_PUBLIC.ACADEMIC_PARTNER AP ON AP.ID = G.ACADEMIC_PARTNER_ID
     """
     )
 
@@ -214,12 +221,11 @@ def writeToCSV(list,filename):
     file.close()
 
 
-gapFlags = [['TERM_CODE_GUILD_UUID_', 'CREATED_AT', 'APPROVED_AMOUNT_CENTS', 'DESCRIPTION']]
+gapFlags = [['TERM-CODE_GUILD-UUID', 'CREATED_AT', 'AP_NAME', 'APPROVED_AMOUNT', 'DESCRIPTION', 'LINK']]
 for x in SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS:
    for row in x:
       flag = []
-      uniqueKey = row[3]+'_'+row[0]
-      flag.extend([uniqueKey, row[4], row[13], row[2]])
+      flag.extend([row[0],row[1],row[2],row[3],row[4],row[5]])
       gapFlags.append(flag) 
 
 
