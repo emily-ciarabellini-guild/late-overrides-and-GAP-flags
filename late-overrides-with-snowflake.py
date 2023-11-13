@@ -62,7 +62,8 @@ SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID = connection.execute_string(
     """
     SELECT DISTINCT 
         CONCAT(TERM_CODE,'_', PARTNER_STUDENT_ID) AS KEY, 
-        MAX(LIS.SET_ON)
+        MAX(STLI.CREATED_AT)
+        /*MAX(LIS.SET_ON)*/
     FROM TA_ORCHESTRATOR_PUBLIC.STUDENT_TERM_LINE_ITEMS STLI
     JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.LINE_ITEM_STATES LIS ON LIS.STUDENT_TERM_LINE_ITEM_ID = STLI.ID
     JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.PAYMENT_DECISIONS PD on PD.ID = STLI.CURRENT_PAYMENT_DECISION_ID
@@ -257,6 +258,10 @@ mlbSTLIs_SID_dict = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID)
 InvMgmt_dict = createDictfromCursor(SQL_INVOICE_MGMT)
 TA1_dict = createDictfromCursor(SQL_TA1)
 TA1_imDict = combineDicts(TA1_dict,InvMgmt_dict)
+d= datetime.datetime(2022, 11, 3, 12, 21, 21, tzinfo=<UTC>)
+mlbSTLIs_SID_dict['202220B1_W00318644'] = d  # set value where line item is missing a start date (null); remove if change script to commit date
+mlbSTLIs_SID_dict['202230B2_W00026318'] = d # set value where line item is missing a start date (null); remove if change script to commit date
+mlbSTLIs_SID_dict['202220B2_W00318644'] = d # set value where line item is missing a start date (null); remove if change script to commit date
 allLinesDict = combineDicts(TA1_imDict,mlbSTLIs_SID_dict)
 
 permissables = createListfromCSV('Permissables.csv')
