@@ -244,11 +244,13 @@ TA1_dict_UUID = createDictfromCursor(SQL_TA1_UUID)
 TA1_imDict_UUID = combineDicts(TA1_dict_UUID,InvMgmt_dict_UUID)
 allLinesDict_UUID = combineDicts(TA1_imDict_UUID,mlbSTLIs_UUID )
 
-gapResult = lateOverrideCheckWdict(gapFlags,allLinesDict_UUID) 
+gapResult = lateOverrideCheckWdict(gapFlags,allLinesDict_UUID)
 gapHeader = gapFlags[0]
 lateGAP = gapResult[0]
+GAPwithoutSTLIs = gapResult[1]
 lateGAP.insert(0,gapHeader)
-writeToCSV(lateGAP,'_gapResults.csv')
+writeToCSV(lateGAP,'_lateGAPflags.csv')
+writeToCSV(GAPwithoutSTLIs,'_gapFlagsWithNoSTLIs.csv')
 print("Count of late GAP flags is: ", len(lateGAP)-1)
 
 
