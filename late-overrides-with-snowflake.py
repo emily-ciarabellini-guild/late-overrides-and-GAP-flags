@@ -239,19 +239,19 @@ for x in SQL_TUITION_ELIGIBILITY_OVERRIDES:
         tuitionOverrides.append(override)
 
 
-# create & combine dictionaries from line item data with UUIDs for GAP Flags comparison
-mlbSTLIs_UUID = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_UUID)
-InvMgmt_dict_UUID = createDictfromCursor(SQL_INVOICE_MGMT_UUID)
-TA1_dict_UUID = createDictfromCursor(SQL_TA1_UUID)
-TA1_imDict_UUID = combineDicts(TA1_dict_UUID,InvMgmt_dict_UUID)
-allLinesDict_UUID = combineDicts(TA1_imDict_UUID,mlbSTLIs_UUID )
+# # create & combine dictionaries from line item data with UUIDs for GAP Flags comparison
+# mlbSTLIs_UUID = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_UUID)
+# InvMgmt_dict_UUID = createDictfromCursor(SQL_INVOICE_MGMT_UUID)
+# TA1_dict_UUID = createDictfromCursor(SQL_TA1_UUID)
+# TA1_imDict_UUID = combineDicts(TA1_dict_UUID,InvMgmt_dict_UUID)
+# allLinesDict_UUID = combineDicts(TA1_imDict_UUID,mlbSTLIs_UUID )
 
-gapResult = lateOverrideCheckWdict(gapFlags,allLinesDict_UUID) 
-gapHeader = gapFlags[0]
-lateGAP = gapResult[0]
-lateGAP.insert(0,gapHeader)
-writeToCSV(lateGAP,'_gapResults.csv')
-print("Count of late GAP flags is: ", len(lateGAP)-1)
+# gapResult = lateOverrideCheckWdict(gapFlags,allLinesDict_UUID) 
+# gapHeader = gapFlags[0]
+# lateGAP = gapResult[0]
+# lateGAP.insert(0,gapHeader)
+# writeToCSV(lateGAP,'_gapResults.csv')
+# print("Count of late GAP flags is: ", len(lateGAP)-1)
 
 
 # create & combine dictionaries from line item data with Student IDs for Tuition Overrides comparison
