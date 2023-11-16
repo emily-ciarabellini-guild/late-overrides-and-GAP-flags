@@ -5,6 +5,7 @@ import snowflake.connector
 import csv
 import datetime
 import pandas as pd
+import pytz
 
 
 dotenv_path = join(dirname(__file__),'.env')
@@ -258,17 +259,19 @@ mlbSTLIs_SID_dict = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID)
 InvMgmt_dict = createDictfromCursor(SQL_INVOICE_MGMT)
 TA1_dict = createDictfromCursor(SQL_TA1)
 TA1_imDict = combineDicts(TA1_dict,InvMgmt_dict)
-d= datetime.datetime(2022, 11, 3, 12, 21, 21, tzinfo=<UTC>)
-mlbSTLIs_SID_dict['202220B1_W00318644'] = d  # set value where line item is missing a start date (null); remove if change script to commit date
-mlbSTLIs_SID_dict['202230B2_W00026318'] = d # set value where line item is missing a start date (null); remove if change script to commit date
-mlbSTLIs_SID_dict['202220B2_W00318644'] = d # set value where line item is missing a start date (null); remove if change script to commit date
+d= datetime.datetime(2022, 11, 3, 12, 21, 21)
+tz = pytz.timezone('UTC')
+dAware = tz.localize(d)
+mlbSTLIs_SID_dict['202220B1_W00318644'] = dAware  # set value where line item is missing a start date (null); remove if change script to commit date
+mlbSTLIs_SID_dict['202230B2_W00026318'] = dAware # set value where line item is missing a start date (null); remove if change script to commit date
+mlbSTLIs_SID_dict['202220B2_W00318644'] = dAware # set value where line item is missing a start date (null); remove if change script to commit date
 allLinesDict = combineDicts(TA1_imDict,mlbSTLIs_SID_dict)
 
 permissables = createListfromCSV('Permissables.csv')
 overridesMinusPermissables = excludePermissables(permissables,tuitionOverrides)
 overridesResult = lateOverrideCheckWdict(overridesMinusPermissables, allLinesDict)
-lateOverrides = overridesResult[0]
+lateOverrides_createdate = overridesResult[0]
 overrideHeader = tuitionOverrides[0]
-lateOverrides.insert(0,overrideHeader)
-writeToCSV(lateOverrides,'_lateOverridesResults.csv')
-print("Count of late overrides is: ", len(lateOverrides)-1)
+lateOverrides_createdate.insert(0,overrideHeader)
+writeToCSV(lateOverrides_createdate,'_lateOverridesResults_createdate.csv')
+print("Count of late overrides based on STLI create date is: ", len(lateOverrides_createdate)-1)
