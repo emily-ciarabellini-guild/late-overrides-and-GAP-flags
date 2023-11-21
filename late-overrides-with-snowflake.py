@@ -112,6 +112,22 @@ SQL_TA1_UUID = connection.execute_string(
 
 SQL_TUITION_ELIGIBILITY_OVERRIDES = connection.execute_string(
     """
+    WITH COMMITTED_STLIS AS (
+                SELECT DISTINCT
+                    STLI.GUILD_UUID, 
+                    STLI.PARTNER_STUDENT_ID as Student_ID, 
+                    AP.NAME as AP_NAME,
+                    AP.ID as AP_UUID,
+                    REPLACE(PD.SUPPORTING_INFORMATION:user:employeeId,'"','') AS EP_ID,                          
+                    REPLACE(PD.SUPPORTING_INFORMATION:user:employerId,'"','') AS EMPLOYER_UUID,
+                    EP.NAME AS EP_NAME
+                FROM TA_ORCHESTRATOR_PUBLIC.STUDENT_TERM_LINE_ITEMS  STLI
+                JOIN TA_ORCHESTRATOR_PUBLIC.PAYMENT_DECISIONS PD ON PD.ID = STLI.CURRENT_PAYMENT_DECISION_ID
+                JOIN ACADEMIC_SERVICE_V2_PUBLIC.ACADEMIC_PARTNER AP ON AP.ID = STLI.ACADEMIC_PARTNER_ID
+                LEFT JOIN TA_ORCHESTRATOR_PUBLIC.INVOICING_CYCLES IC ON IC.ID = STLI.INVOICING_CYCLE_ID
+                JOIN GUILD.CATALOG_SERVICE_PUBLIC.EMPLOYERS EP ON EP.UUID = EMPLOYER_UUID
+                WHERE STLI.CURRENT_STATE_NAME = 'Committed'
+                )
     SELECT 
         CONCAT(O.TERM_CODE,'_', O.STUDENT_EXTERNAL_ID) as key,
         O.UPDATED_AT, 
@@ -122,10 +138,12 @@ SQL_TUITION_ELIGIBILITY_OVERRIDES = connection.execute_string(
         O.STUDENT_EXTERNAL_ID, 
         O.TERM_CODE, 
         O.COMMENT, 
-        CONCAT('https://ta-admin.guildeducation.com/member-payments?searchTerm=', O.STUDENT_EXTERNAL_ID, '&page=0&attribute=studentId') AS "MP SEARCH URL"
+        CONCAT('https://ta-admin.guildeducation.com/member-payments?searchTerm=', O.STUDENT_EXTERNAL_ID, '&page=0&attribute=studentId') AS "MP SEARCH URL",
+        EP_NAME
     FROM GUILD.TA_ORCHESTRATOR_PUBLIC.TUITION_ELIGIBILITY_OVERRIDES O
     JOIN GUILD.USER_PROFILE_SERVICE_PUBLIC.USERS U ON U.ID = O.ACTOR_ID
     JOIN GUILD.ACADEMIC_SERVICE_V2_PUBLIC.ACADEMIC_PARTNER AP ON AP.ID = O.ACADEMIC_PARTNER_ID
+    LEFT JOIN COMMITTED_STLIS CS ON CS.STUDENT_ID =  O.STUDENT_EXTERNAL_ID
     ORDER BY O.CREATED_AT DESC
     """
     )
@@ -229,11 +247,11 @@ for x in SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS:
       gapFlags.append(flag) 
 
 
-tuitionOverrides = [['KEY', 'UPDATED_AT', 'OVERRIDE_LOGGED_BY', 'AP_NAME', 'REASON', 'TUITION_ELIGIBLE', 'STUDENT_EXTERNAL_ID', 'TERM_CODE', 'COMMENT', 'MP SEARCH URL' ]]
+tuitionOverrides = [['KEY', 'UPDATED_AT', 'OVERRIDE_LOGGED_BY', 'AP_NAME', 'REASON', 'TUITION_ELIGIBLE', 'STUDENT_EXTERNAL_ID', 'TERM_CODE', 'COMMENT', 'MP SEARCH URL','EP_NAME' ]]
 for x in SQL_TUITION_ELIGIBILITY_OVERRIDES:
     for row in x:
         override = []
-        override.extend([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]])  # turns row into a list
+        override.extend([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10]])  # turns row into a list
         tuitionOverrides.append(override)
 
 
