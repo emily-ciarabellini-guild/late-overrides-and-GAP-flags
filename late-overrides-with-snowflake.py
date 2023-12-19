@@ -232,7 +232,7 @@ def writeToCSV(list,filename):
     Takes a list and a CSV file name as parameters and writes the contents of the 
     list to the csv file. File name is a string in quotes ''.
     """
-    file = open(filename,'w',newline='')
+    file = open(filename,'w',newline='',encoding='utf-8')
     wrapper = csv.writer(file)
     for i in list:
         wrapper.writerow(i)
