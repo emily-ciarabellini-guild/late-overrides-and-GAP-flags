@@ -3,9 +3,6 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 import snowflake.connector
 import csv
-import datetime
-import pandas as pd
-
 
 dotenv_path = join(dirname(__file__),'.env')
 load_dotenv(dotenv_path)
@@ -44,71 +41,143 @@ SQL_GUILD_AS_A_PAYOR_CONTROL_SPECIFICATIONS = connection.execute_string(
     """
     )
 
-SQL_STUDENT_TERM_LINE_ITEMS_UUID = connection.execute_string(
+##SQL query retrieves most recent committed line item for a given TermCode_StudentID combination across TA 1.0, Invoice Management, and MLB line items. 
+SQL_COMBINED_TA_LINES = connection.execute_string(
     """
-    SELECT DISTINCT 
-        CONCAT(TERM_CODE,'_', GUILD_UUID) AS KEY, 
-        MAX(LIS.SET_ON)
-    FROM TA_ORCHESTRATOR_PUBLIC.STUDENT_TERM_LINE_ITEMS STLI
-    JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.LINE_ITEM_STATES LIS ON LIS.STUDENT_TERM_LINE_ITEM_ID = STLI.ID
-    JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.PAYMENT_DECISIONS PD on PD.ID = STLI.CURRENT_PAYMENT_DECISION_ID
-    WHERE LIS.NAME = 'Committed'
-    AND STLI.CURRENT_STATE_NAME = 'Committed'
-    GROUP BY KEY
-    """
+    WITH CombinedList AS(
+        WITH RankedRows AS (
+            SELECT 
+                CONCAT(STLI.TERM_CODE, '_', STLI.PARTNER_STUDENT_ID) AS KEY, 
+                LIS.SET_ON AS COMMIT_DATE,
+                PD.PAYMENT_REASON,
+                STLI.CREATED_AT
+            FROM TA_ORCHESTRATOR_PUBLIC.STUDENT_TERM_LINE_ITEMS STLI
+            JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.LINE_ITEM_STATES LIS ON LIS.STUDENT_TERM_LINE_ITEM_ID = STLI.ID
+            JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.PAYMENT_DECISIONS PD ON PD.ID = STLI.CURRENT_PAYMENT_DECISION_ID
+            WHERE LIS.NAME = 'Committed'
+            AND STLI.CURRENT_STATE_NAME = 'Committed'
+        
+            UNION ALL
+            
+            SELECT
+                CONCAT(TLI.TERM_CODE,'_', SLI.STUDENT_EXTERNAL_ID) AS KEY, 
+                I.UPDATED_AT AS COMMIT_DATE,
+                CASE
+                    WHEN (TLI.COST_CENTS = TLI.FUNDED_CENTS) THEN 'Full Payment Facilitated'
+                    WHEN (TLI.FUNDED_CENTS > 0) THEN 'Hit funding cap'
+                    ELSE 'Other Payment Status'
+                    END AS PAYMENT_REASON,
+                SLI.CREATED_AT    
+            FROM TA_ORCHESTRATOR_PUBLIC.TERM_LINE_ITEMS TLI
+            JOIN TA_ORCHESTRATOR_PUBLIC.STUDENT_LINE_ITEMS SLI ON SLI.ID = TLI.STUDENT_LINE_ITEM_ID
+            JOIN TA_ORCHESTRATOR_PUBLIC.INVOICES I ON I.ID = SLI.INVOICE_ID
+            JOIN ACADEMIC_SERVICE_V2_PUBLIC.ACADEMIC_PARTNER AP ON AP.ID = SLI.ACADEMIC_PARTNER_ID
+            WHERE I.STATE = 'COMMITTED'
+        
+            UNION ALL
+        
+            SELECT 
+                CONCAT(TERM_CODE,'_', PARTNER_STUDENT_ID) AS KEY, 
+                BENEFIT_LOCKED_ON AS COMMIT_DATE,
+                CASE
+                    WHEN SFLI.NET_TA_CENTS = SFLI.EMPLOYER_PAYMENT_OBLIGATION THEN 'Full Payment Facilitated'
+                    WHEN SFLI.EMPLOYER_PAYMENT_OBLIGATION > 0 THEN 'Hit funding cap'
+                    ELSE 'Other Payment Status'
+                    END AS PAYMENT_REASON,
+                BENEFIT_LOCKED_ON AS CREATED_AT
+            FROM TA_ORCHESTRATOR_PUBLIC.LEGACY_SALESFORCE_LINE_ITEMS SFLI
+        )
+        SELECT
+            KEY,
+            COMMIT_DATE,
+            PAYMENT_REASON,
+            CREATED_AT,
+            ROW_NUMBER() OVER (PARTITION BY KEY ORDER BY COMMIT_DATE DESC) AS RowNum
+                //ROW_NUMBER() function assigns a rank to each row within each distinct combination of TERM_CODE and PARTNER_STUDENT_ID, based on the COMMIT_DATE date in descending order.
+                //'partition by' resets the row number for each distinct combination of TERM_CODE and PARTNER_STUDENT_ID.
+        FROM RankedRows
     )
 
-SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID = connection.execute_string(
+    SELECT
+        KEY,
+        COMMIT_DATE,
+        PAYMENT_REASON,
+        CREATED_AT
+    FROM CombinedList
+    WHERE RowNum = 1
+    --AND KEY = '202150_873541637'
     """
-    SELECT DISTINCT 
-        CONCAT(TERM_CODE,'_', PARTNER_STUDENT_ID) AS KEY, 
-        MAX(LIS.SET_ON)
-    FROM TA_ORCHESTRATOR_PUBLIC.STUDENT_TERM_LINE_ITEMS STLI
-    JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.LINE_ITEM_STATES LIS ON LIS.STUDENT_TERM_LINE_ITEM_ID = STLI.ID
-    JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.PAYMENT_DECISIONS PD on PD.ID = STLI.CURRENT_PAYMENT_DECISION_ID
-    WHERE LIS.NAME = 'Committed'
-    AND STLI.CURRENT_STATE_NAME = 'Committed'
-    GROUP BY KEY
+)
+
+
+SQL_COMBINED_TA_LINES_UUID = connection.execute_string(
     """
+    WITH CombinedList AS(
+        WITH RankedRows AS (
+            SELECT 
+                CONCAT(STLI.TERM_CODE, '_', STLI.GUILD_UUID) AS KEY, 
+                LIS.SET_ON AS COMMIT_DATE,
+                PD.PAYMENT_REASON,
+                STLI.CREATED_AT
+            FROM TA_ORCHESTRATOR_PUBLIC.STUDENT_TERM_LINE_ITEMS STLI
+            JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.LINE_ITEM_STATES LIS ON LIS.STUDENT_TERM_LINE_ITEM_ID = STLI.ID
+            JOIN GUILD.TA_ORCHESTRATOR_PUBLIC.PAYMENT_DECISIONS PD ON PD.ID = STLI.CURRENT_PAYMENT_DECISION_ID
+            WHERE LIS.NAME = 'Committed'
+            AND STLI.CURRENT_STATE_NAME = 'Committed'
+        
+            UNION ALL
+            
+            SELECT
+                CONCAT(TLI.TERM_CODE,'_', SLI.GUILD_UUID) AS KEY, 
+                I.UPDATED_AT AS COMMIT_DATE,
+                CASE
+                    WHEN (TLI.COST_CENTS = TLI.FUNDED_CENTS) THEN 'Full Payment Facilitated'
+                    WHEN (TLI.FUNDED_CENTS > 0) THEN 'Hit funding cap'
+                    ELSE 'Other Payment Status'
+                    END AS PAYMENT_REASON,
+                SLI.CREATED_AT    
+            FROM TA_ORCHESTRATOR_PUBLIC.TERM_LINE_ITEMS TLI
+            JOIN TA_ORCHESTRATOR_PUBLIC.STUDENT_LINE_ITEMS SLI ON SLI.ID = TLI.STUDENT_LINE_ITEM_ID
+            JOIN TA_ORCHESTRATOR_PUBLIC.INVOICES I ON I.ID = SLI.INVOICE_ID
+            JOIN ACADEMIC_SERVICE_V2_PUBLIC.ACADEMIC_PARTNER AP ON AP.ID = SLI.ACADEMIC_PARTNER_ID
+            WHERE I.STATE = 'COMMITTED'
+        
+            UNION ALL
+        
+            SELECT 
+                CONCAT(TERM_CODE,'_', GUILD_UUID) AS KEY, 
+                BENEFIT_LOCKED_ON AS COMMIT_DATE,
+                CASE
+                    WHEN SFLI.NET_TA_CENTS = SFLI.EMPLOYER_PAYMENT_OBLIGATION THEN 'Full Payment Facilitated'
+                    WHEN SFLI.EMPLOYER_PAYMENT_OBLIGATION > 0 THEN 'Hit funding cap'
+                    ELSE 'Other Payment Status'
+                    END AS PAYMENT_REASON,
+                BENEFIT_LOCKED_ON AS CREATED_AT
+            FROM TA_ORCHESTRATOR_PUBLIC.LEGACY_SALESFORCE_LINE_ITEMS SFLI
+        )
+        SELECT
+            KEY,
+            COMMIT_DATE,
+            PAYMENT_REASON,
+            CREATED_AT,
+            ROW_NUMBER() OVER (PARTITION BY KEY ORDER BY COMMIT_DATE DESC) AS RowNum
+                //ROW_NUMBER() function assigns a rank to each row within each distinct combination of TERM_CODE and PARTNER_STUDENT_ID, based on the COMMIT_DATE date in descending order.
+                //'partition by' resets the row number for each distinct combination of TERM_CODE and PARTNER_STUDENT_ID.
+        FROM RankedRows
     )
 
-SQL_INVOICE_MGMT = connection.execute_string(
-    """
-    SELECT DISTINCT CONCAT(TLI.TERM_CODE,'_', SLI.STUDENT_EXTERNAL_ID) AS KEY, MAX(I.UPDATED_AT)
-    FROM TA_ORCHESTRATOR_PUBLIC.TERM_LINE_ITEMS TLI
-    JOIN TA_ORCHESTRATOR_PUBLIC.STUDENT_LINE_ITEMS SLI ON SLI.ID = TLI.STUDENT_LINE_ITEM_ID
-    JOIN TA_ORCHESTRATOR_PUBLIC.INVOICES I ON I.ID = SLI.INVOICE_ID
-    WHERE I.STATE = 'COMMITTED'
-    GROUP BY KEY
-    """
-    )
+    SELECT
+        KEY,
+        COMMIT_DATE,
+        PAYMENT_REASON,
+        CREATED_AT
+    FROM CombinedList
+    WHERE RowNum = 1
 
-SQL_INVOICE_MGMT_UUID = connection.execute_string(
     """
-    SELECT DISTINCT CONCAT(TLI.TERM_CODE,'_', SLI.GUILD_UUID) AS KEY, MAX(I.UPDATED_AT)
-    FROM TA_ORCHESTRATOR_PUBLIC.TERM_LINE_ITEMS TLI
-    JOIN TA_ORCHESTRATOR_PUBLIC.STUDENT_LINE_ITEMS SLI ON SLI.ID = TLI.STUDENT_LINE_ITEM_ID
-    JOIN TA_ORCHESTRATOR_PUBLIC.INVOICES I ON I.ID = SLI.INVOICE_ID
-    WHERE I.STATE = 'COMMITTED'
-    GROUP BY KEY
-    """
-    )
 
-SQL_TA1 = connection.execute_string(
-    """
-    SELECT DISTINCT CONCAT(TERM_CODE,'_', PARTNER_STUDENT_ID) AS KEY, MAX(BENEFIT_LOCKED_ON)
-    FROM TA_ORCHESTRATOR_PUBLIC.LEGACY_SALESFORCE_LINE_ITEMS SFLI
-    GROUP BY KEY
-    """
-    )
+)
 
-SQL_TA1_UUID = connection.execute_string(
-    """
-    SELECT DISTINCT CONCAT(TERM_CODE,'_', GUILD_UUID) AS KEY, MAX(BENEFIT_LOCKED_ON)
-    FROM TA_ORCHESTRATOR_PUBLIC.LEGACY_SALESFORCE_LINE_ITEMS SFLI
-    GROUP BY KEY
-    """
-    )
 
 SQL_TUITION_ELIGIBILITY_OVERRIDES = connection.execute_string(
     """
@@ -175,22 +244,6 @@ def createListfromCSV(csvFileName):
     return new_list
 
 
-def combineDicts(dict1, dict2):
-    """
-    Combines two dictionaries where the values are dates. This function
-    maintains the value where the date is the most recent for a given key 
-    when there are duplicate keys across the two dictionaries. 
-    """ 
-    newDict = dict1 | dict2
-    for k in newDict:
-        if k in dict1 and k in dict2:
-            if dict1[k] > dict2[k]:
-                newDict[k] = dict1[k]
-            else:
-                newDict[k] = dict2[k]
-    return newDict
-
-
 def excludePermissables(permissables,overrides):
     """
     Takes one list (permissables) and one table (overrides) as parameters and 
@@ -227,6 +280,38 @@ def lateOverrideCheckWdict(overrides, linesDict):
     return [lateOverrideslist,overridesWithNoLoggedSTLIs]
 
 
+def lateOverrideCheckLists(overrides, lines):
+    """
+    Compares date of logged overrides to the date of the committed line item for the
+    given term_studentID key. If the override is created after the line was created AND the 
+    override reason is MP3, then the override is added to the late override list
+    Or, if the override was created after the line was committed, then the override is
+    added to the late override list.
+    This function returns 2 lists: late overrides and overrides where line items 
+    were not found.
+    overrides is a list with termcode_studentID in index 0, date at index 1, 
+    and override reason at index 4. lines is a nested list containing lists 
+    with termcode_studentID at index 0, commit date at index 1, and create date 
+    at index 3.
+    """ 
+    lateOverrideslist = []
+    overridesWithNoCommittedSTLIs = []
+
+    for ovrd in overrides:
+        for line in lines:
+            if ovrd[0] == line[0]:
+                if ((ovrd[1] > line[3]) and (ovrd[4] == 'mp3override')) or (ovrd[1] > line[1]):  ##If override created after line created AND override reason is MP3 -OR- override created after line was committed, then the override is late override
+                    if(ovrd[5]==True) and (line[2]=='Full Payment Facilitated' or line[2]=='Hit Annual TA Cap'): ##committed line was already eligible and override was eligible
+                        continue
+                    if(ovrd[5]==False) and (line[2]=='Ineligible' or line[2]=='Did Not Meet Corporate Requirement(s)'): ##committed line was already ineligible and override is ineligible
+                        continue
+                    else:
+                        lateOverrideslist.append(ovrd)
+        else:
+            overridesWithNoCommittedSTLIs.append(ovrd)
+    return [lateOverrideslist,overridesWithNoCommittedSTLIs]
+
+
 def writeToCSV(list,filename):
     """
     Takes a list and a CSV file name as parameters and writes the contents of the 
@@ -255,13 +340,16 @@ for x in SQL_TUITION_ELIGIBILITY_OVERRIDES:
         tuitionOverrides.append(override)
 
 
-# create & combine dictionaries from line item data with UUIDs for GAP Flags comparison
-mlbSTLIs_UUID = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_UUID)
-InvMgmt_dict_UUID = createDictfromCursor(SQL_INVOICE_MGMT_UUID)
-TA1_dict_UUID = createDictfromCursor(SQL_TA1_UUID)
-TA1_imDict_UUID = combineDicts(TA1_dict_UUID,InvMgmt_dict_UUID)
-allLinesDict_UUID = combineDicts(TA1_imDict_UUID,mlbSTLIs_UUID )
+taLineItems = [['KEY', 'COMMIT_DATE', 'PAYMENT_REASON', 'CREATED_AT']]
+for x in SQL_COMBINED_TA_LINES:
+    for row in x:
+        lineItem = []
+        lineItem.extend([row[0],row[1],row[2],row[3]])
+        taLineItems.append(lineItem)
 
+
+# # create & combine dictionaries from line item data with UUIDs for GAP Flags comparison
+allLinesDict_UUID = createDictfromCursor(SQL_COMBINED_TA_LINES_UUID)
 gapResult = lateOverrideCheckWdict(gapFlags,allLinesDict_UUID)
 gapHeader = gapFlags[0]
 lateGAP = gapResult[0]
@@ -272,18 +360,9 @@ writeToCSV(GAPwithoutSTLIs,'_gapFlagsWithNoSTLIs.csv')
 print("Count of late GAP flags is: ", len(lateGAP)-1)
 
 
-# create & combine dictionaries from line item data with Student IDs for Tuition Overrides comparison
-mlbSTLIs_SID_dict = createDictfromCursor(SQL_STUDENT_TERM_LINE_ITEMS_STUDENT_ID)
-InvMgmt_dict = createDictfromCursor(SQL_INVOICE_MGMT)
-TA1_dict = createDictfromCursor(SQL_TA1)
-TA1_imDict = combineDicts(TA1_dict,InvMgmt_dict)
-allLinesDict = combineDicts(TA1_imDict,mlbSTLIs_SID_dict)
-
 permissables = createListfromCSV('Permissables.csv')
 overridesMinusPermissables = excludePermissables(permissables,tuitionOverrides)
-overridesResult = lateOverrideCheckWdict(overridesMinusPermissables, allLinesDict)
-lateOverrides = overridesResult[0]
-overrideHeader = tuitionOverrides[0]
-lateOverrides.insert(0,overrideHeader)
-writeToCSV(lateOverrides,'_lateOverridesResults.csv')
+overridesResult = lateOverrideCheckLists(overridesMinusPermissables, taLineItems) 
+writeToCSV(overridesResult[0],'_lateOverridesResults.csv')
 print("Count of late overrides is: ", len(lateOverrides)-1)
+
