@@ -363,6 +363,7 @@ print("Count of late GAP flags is: ", len(lateGAP)-1)
 permissables = createListfromCSV('Permissables.csv')
 overridesMinusPermissables = excludePermissables(permissables,tuitionOverrides)
 overridesResult = lateOverrideCheckLists(overridesMinusPermissables, taLineItems) 
-writeToCSV(overridesResult[0],'_lateOverridesResults.csv')
+lateOverrides = overridesResult[0];
+writeToCSV(lateOverrides,'_lateOverridesResults.csv')
 print("Count of late overrides is: ", len(lateOverrides)-1)
 
