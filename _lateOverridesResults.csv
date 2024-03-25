@@ -1,120 +1,59 @@
-KEY,UPDATED_AT,OVERRIDE_LOGGED_BY,AP_NAME,REASON,TUITION_ELIGIBLE,STUDENT_EXTERNAL_ID,TERM_CODE,COMMENT,MP SEARCH URL
-September_2023_term_karina.moody1@gmail.com,2023-11-06 16:24:07.663000+00:00,West,"Golden Gate University Degrees+, powered by Outlier.org",mp3override,True,karina.moody1@gmail.com,September_2023_term,Data Delay - Late 	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OoMhhAAF/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=karina.moody1@gmail.com&page=0&attribute=studentId
-202310_836336320,2023-11-03 23:04:16.450000+00:00,West,Colorado State University College of Business,mp3override,True,836336320,202310,"
-moved to needs to re-apply, messing up eligibility data shared with partner
+KEY,UPDATED_AT,OVERRIDE_LOGGED_BY,AP_NAME,REASON,TUITION_ELIGIBLE,STUDENT_EXTERNAL_ID,TERM_CODE,COMMENT,MP SEARCH URL,EP_NAME
+202411_B00673619,2024-03-22 18:29:53.848000+00:00,West,University of Massachusetts Global,mp3override,True,B00673619,202411,Employer eligibility issue (override approved)	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Mypv5AAB/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=B00673619&page=0&attribute=studentId,Walmart
+202411_B00703373,2024-03-21 22:47:18.242000+00:00,West,University of Massachusetts Global,mp3override,True,B00703373,202411,tagging issues	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NozMiAAJ/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=B00703373&page=0&attribute=studentId,UCHealth
+202411_B00679552,2024-03-21 22:45:06.283000+00:00,West,University of Massachusetts Global,mp3override,True,B00679552,202411,tagging issues	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Nzt6bAAB/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=B00679552&page=0&attribute=studentId,PNC
+202411_B00687105,2024-03-21 22:42:39.227000+00:00,West,University of Massachusetts Global,mp3override,True,B00687105,202411,Approval from EPS	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0CepAAF/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000rxYuIAAU%2Fview,https://ta-admin.guildeducation.com/member-payments?searchTerm=B00687105&page=0&attribute=studentId,Walmart
+202411_B00701912,2024-03-21 22:36:35.144000+00:00,West,University of Massachusetts Global,mp3override,True,B00701912,202411,"Incorrect override initially submitted for 202415 term (member was already eligible for that term)
+tagging issues	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0Vw1AAF/view?ws=%2Flightning%2Fr%2FContact%2F0035e000014VYDGAA4%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=B00701912&page=0&attribute=studentId,Providence
+2401A_45556780,2024-03-19 14:18:33.951000+00:00,Kimber,Purdue Global,mp3override,True,45556780,2401A,Charter exception for corporate eligibility	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QinW8AAJ/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=45556780&page=0&attribute=studentId,Charter
+2401E_44534152,2024-03-19 14:11:33.221000+00:00,Kimber,Purdue Global,mp3override,False,44534152,2401E,"REVERSE OVERRIDE to ineligible - ExcelTrack student	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiRH4AAN/view
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NoX6SAAV/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=836336320&page=0&attribute=studentId
-202350_873716031,2023-11-03 22:57:28.957000+00:00,West,University of Denver,mp3override,True,873716031,202350,"Incorrect program eligibility
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Oo87QAAR/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000vftMzAAI%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=873716031&page=0&attribute=studentId
-202320B2_W00377334,2023-11-03 22:41:14.136000+00:00,West,Wilmington University,mp3override,True,W00377334,202320B2,"Enrolled in incorrect program, however course in question for the term applies to their covered program; thus override has been approved.
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OoPk4AAF/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000007v5hxEAA%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00377334&page=0&attribute=studentId
-202320B1_W00372171,2023-11-03 22:39:25.574000+00:00,West,Wilmington University,mp3override,True,W00372171,202320B1,"Data Delay - student not tagged
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OoIosAAF/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000007v5hxEAA%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00372171&page=0&attribute=studentId
-2023-06-26-2023-08-06_21383259,2023-10-30 18:30:03.998000+00:00,West,Bellevue University,mp3override,True,21383259,2023-06-26-2023-08-06,"Ep change
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O1G6fAAF/view?ws=%2Flightning%2Fr%2FCase%2F5005e00000OoUaSAAV%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=21383259&page=0&attribute=studentId
-2023-05-08-2023-06-18_21383259,2023-10-30 18:29:36.118000+00:00,West,Bellevue University,mp3override,True,21383259,2023-05-08-2023-06-18,"Ep change
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O1G6fAAF/view?ws=%2Flightning%2Fr%2FCase%2F5005e00000OoUaSAAV%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=21383259&page=0&attribute=studentId
-2023-03-27-2023-06-18_21383259,2023-10-30 18:29:07.363000+00:00,West,Bellevue University,mp3override,True,21383259,2023-03-27-2023-06-18,"Ep change
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O1G6fAAF/view?ws=%2Flightning%2Fr%2FCase%2F5005e00000OoUaSAAV%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=21383259&page=0&attribute=studentId
-2023-03-27-2023-05-07_21383259,2023-10-30 18:27:41.863000+00:00,West,Bellevue University,mp3override,True,21383259,2023-03-27-2023-05-07,"EP Change
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O1G6fAAF/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=21383259&page=0&attribute=studentId
-2023-06-05-2023-08-12_21332056,2023-10-30 16:47:59.752000+00:00,Daves,Bellevue University,mp3override,True,21332056,2023-06-05-2023-08-12,"Employer Change
+added to off-cycle recon due to invoice for the term",https://ta-admin.guildeducation.com/member-payments?searchTerm=44534152&page=0&attribute=studentId,Rocket
+Spring2024ELearn1_P000096762,2024-03-15 23:15:50.885000+00:00,West,Louisiana State University of Alexandria,mp3override,True,P000096762,Spring2024ELearn1,Enrolled before benefit launch - EP exception 	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QievCAAR/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000008xyisEAA%2Fview%3FqueryScope%3DuserFolders,https://ta-admin.guildeducation.com/member-payments?searchTerm=P000096762&page=0&attribute=studentId,CHRISTUS Health
+Spring2024ELearn1_P000064699,2024-03-15 23:14:51.039000+00:00,West,Louisiana State University of Alexandria,mp3override,True,P000064699,Spring2024ELearn1,Enrolled before benefit launch - EP exception 	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QhoeBAAR/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000008xyisEAA%2Fview%3FqueryScope%3DuserFolders,https://ta-admin.guildeducation.com/member-payments?searchTerm=P000064699&page=0&attribute=studentId,CHRISTUS Health
+202402_931897762,2024-03-15 23:07:22.129000+00:00,West,Oregon State University Ecampus,mp3override,True,931897762,202402,App submitted on term start. EPS approved override since they were an existing student.	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Ora4gAAB/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=931897762&page=0&attribute=studentId,Target
+202410B1_W00379109,2024-03-15 22:55:18.150000+00:00,West,Wilmington University,mp3override,True,W00379109,202410B1,Data Delay - Not Tagged at Term Start		https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiZZjAAN/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000007v5hxEAA%2Fview,https://ta-admin.guildeducation.com/member-payments?searchTerm=W00379109&page=0&attribute=studentId,JPMorgan Chase
+202410B2_W00388459,2024-03-15 22:54:42.573000+00:00,West,Wilmington University,mp3override,True,W00388459,202410B2,Data Delay - Not Tagged at Term Start		https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiN7OAAV/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000007v5hxEAA%2Fview,https://ta-admin.guildeducation.com/member-payments?searchTerm=W00388459&page=0&attribute=studentId,ProMedica
+202410B2_W00388506,2024-03-15 22:54:12.087000+00:00,West,Wilmington University,mp3override,True,W00388506,202410B2,Data Delay - Not Tagged at Term Start		https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiiPkAAJ/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000007v5hxEAA%2Fview,https://ta-admin.guildeducation.com/member-payments?searchTerm=W00388506&page=0&attribute=studentId,"Macy's, Inc."
+2022_spring_23775212,2024-03-15 22:45:54.581000+00:00,West,University of Arizona,mp3override,True,23775212,2022_spring,https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiYTvAAN/view	Session level eligibility issue. Member was locked in as ineligible at the semester start but was eligible by the actual term/semester start. Process has since changed so EPS granted as exception.,https://ta-admin.guildeducation.com/member-payments?searchTerm=23775212&page=0&attribute=studentId,Target
+202308_556063,2024-03-14 17:02:15.090000+00:00,Daves,Pima Medical Institute,mp3override,False,556063,202308,"This is a reverse override. Learner incorrectly appearing as eligible in Roll Call. Funds need to be sent back to Guild
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000LmWJXAA3/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000rxNABAA2%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=21332056&page=0&attribute=studentId
-2022-08-29-2022-11-19_21343701,2023-10-30 16:30:35.737000+00:00,Daves,Bellevue University,mp3override,True,21343701,2022-08-29-2022-11-19,"Employer Change: 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Lp77KAAR/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000t8gX0AAI%2Fview
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiFwVAAV/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=556063&page=0&attribute=studentId,Providence
+202304_1779026,2024-03-14 16:55:01.090000+00:00,Daves,Pima Medical Institute,mp3override,True,1779026,202304,"Learner incorrectly displaying as GPA ineligible due to Roll Call data error
 
-Note from Tracker: ""A line item for this term has already been committed as ineligible under Walmart. This will involve TA engineering effort to move the bill to Target. Erin to work with Emily""",https://ta-admin.guildeducation.com/member-payments?searchTerm=21343701&page=0&attribute=studentId
-2023-03-13-2023-06-03_21321587,2023-10-27 19:56:14.577000+00:00,Ciarabellini,Bellevue University,mp3override,True,21321587,2023-03-13-2023-06-03,Employer Change,https://ta-admin.guildeducation.com/member-payments?searchTerm=21321587&page=0&attribute=studentId
-2022-01-03-2022-02-13_21223045,2023-10-27 19:44:01.621000+00:00,Ciarabellini,Bellevue University,mp3override,True,21223045,2022-01-03-2022-02-13,Double Major Issue,https://ta-admin.guildeducation.com/member-payments?searchTerm=21223045&page=0&attribute=studentId
-2237_884474651,2023-10-27 00:12:47.032000+00:00,West,"California State University, Fullerton",mp3override,True,884474651,2237,"Student was eligible but was approved late.
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0FWkAAN/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=884474651&page=0&attribute=studentId
-202370_873719419,2023-10-26 23:58:36.453000+00:00,West,University of Denver,mp3override,True,873719419,202370,"Student mistakenly enrolled in incorrect program, but coursework counts towards eligible program. EPS approved override. 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NoXiqAAF/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=873719419&page=0&attribute=studentId
-202330B2_W00382752,2023-10-26 23:50:28.235000+00:00,West,Wilmington University,mp3override,True,W00382752,202330B2,"Data Delay - student not tagged
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NpHvmAAF/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00382752&page=0&attribute=studentId
-2023-06-21-2023-08-01_21394850,2023-10-25 16:26:03.301000+00:00,Daves,Bellevue University,mp3override,True,21394850,2023-06-21-2023-08-01,"EP Exception
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OryHdAAJ/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=1779026&page=0&attribute=studentId,Bon Secours Mercy Health
+2238_3212797,2024-03-11 15:14:37.782000+00:00,Radigan,University of Maryland Global Campus,mp3override,True,3212797,2238,Roll Call Data Glitch https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiLZIAA3/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=3212797&page=0&attribute=studentId,Regions
+202304_1856957,2024-03-08 23:55:54.064000+00:00,West,Pima Medical Institute,mp3override,True,1856957,202304,"ART approval after term start, confirmed that learner was eligible on lock date.	2/23 https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OryDlAAJ/view?ws=%2Flightning%2Fr%2FContact%2F0035e000010yD0fAAE%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=1856957&page=0&attribute=studentId,OSF HealthCare
+FA-23_1126022,2024-03-07 14:54:25.461000+00:00,Daves,Mercy College of Ohio,mp3override,True,1126022,FA-23,"Eligibility exception from employer
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O1K9OAAV/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=21394850&page=0&attribute=studentId
-2023-06-05-2023-08-12_21440420,2023-10-25 16:21:45.113000+00:00,Daves,Bellevue University,mp3override,True,21440420,2023-06-05-2023-08-12,"Data Delay
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QhxDhAAJ/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=1126022&page=0&attribute=studentId,Bon Secours Mercy Health
+2401A_44269116,2024-03-01 23:55:06.689000+00:00,West,Purdue Global,mp3override,True,44269116,2401A,Data error - inaccurate program eligibility 	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0qcQAAR/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=44269116&page=0&attribute=studentId,WM
+2401A_44269116,2024-03-14 15:15:35.278000+00:00,Spingler,Purdue Global,mp3override,True,44269116,2401A,Data error - inaccurate program eligibility 	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0qcQAAR/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=44269116&page=0&attribute=studentId,WM
+202415_B00691033,2024-02-29 17:13:17.417000+00:00,Daves,University of Massachusetts Global,mp3override,True,B00691033,202415,"not ART approved by term start, override approved anyway
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NoOYkAAN/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=21440420&page=0&attribute=studentId
-2023-06-26-2023-08-06_21356344,2023-10-25 16:08:55.295000+00:00,Daves,Bellevue University,mp3override,True,21356344,2023-06-26-2023-08-06,"EP exception - Term start eligible 
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OqnhBAAR/view
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0e4vAAB/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000rvMQ3AAM%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=21356344&page=0&attribute=studentId
-202330B2_W00382518,2023-10-25 15:54:56.936000+00:00,Daves,Wilmington University,mp3override,True,W00382518,202330B2,"Data Delay - student not tagged 
+",https://ta-admin.guildeducation.com/member-payments?searchTerm=B00691033&page=0&attribute=studentId,UCHealth
+202415_B00691033,2024-03-01 16:53:26.694000+00:00,Peterson,University of Massachusetts Global,mp3override,True,B00691033,202415,"not ART approved by term start, override approved anyway
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Oo4uGAAR/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000t7jEBAAY%2Fview",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00382518&page=0&attribute=studentId
-202310B1_W00369396,2023-10-25 15:52:25.077000+00:00,Daves,Wilmington University,mp3override,True,W00369396,202310B1,"Data Delay - student not tagged
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OqnhBAAR/view
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Oo4liAAB/view?ws=%2Flightning%2Fr%2FReport%2F00O5e000007v5hxEAA%2Fview%3FqueryScope%3DuserFolders",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00369396&page=0&attribute=studentId
-202309_1086201,2023-11-02 19:51:10.355000+00:00,Peterson,MedCerts,mp3override,False,1086201,202309,"Reverse override - LP enrolled student in program not offered by employer
+",https://ta-admin.guildeducation.com/member-payments?searchTerm=B00691033&page=0&attribute=studentId,UCHealth
+202350_873715960,2024-02-29 16:45:03.315000+00:00,Daves,University of Denver,mp3override,True,873715960,202350,"Incorrect start date. This member was approved for the Frontline Manager Leadership Program with a start date of 09/11/2023 (Winter Quarter). The school reached out about the member's Summer 2023 term that started on 06/11/2023. The member was approved on 06/12/2023 so funding was not applied for the Summer 2023 term. 
 
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NoYF0AAN/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000vdsP5AAI%2Fview
-
-",https://ta-admin.guildeducation.com/member-payments?searchTerm=1086201&page=0&attribute=studentId
-202309_1086201,2023-10-20 14:40:17.380000+00:00,Daves,MedCerts,mp3override,False,1086201,202309,"Reverse override - LP enrolled student in program not offered by employer
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NoYF0AAN/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000vdsP5AAI%2Fview
-
-",https://ta-admin.guildeducation.com/member-payments?searchTerm=1086201&page=0&attribute=studentId
-2235_P101093832,2023-10-19 15:54:46.234000+00:00,Radigan,Ohio University,guildAsAPayor,False,P101093832,2235,"GAP override to cover $1,614 on student's account
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000JfoICAAZ/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=P101093832&page=0&attribute=studentId
-23TW3_1981395,2023-10-19 00:21:33.366000+00:00,West,Southern New Hampshire University,mp3override,False,1981395,23TW3,REVERSE OVERRIDE to ineligible - payment made in error for Walmart Grad program	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000L90idAAB/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=1981395&page=0&attribute=studentId
-23TW3_1877253,2023-10-19 00:21:01.923000+00:00,West,Southern New Hampshire University,mp3override,False,1877253,23TW3,REVERSE OVERRIDE to ineligible - payment made in error for Walmart Grad program	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NpLrAAAV/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=1877253&page=0&attribute=studentId
-23TW3_1898793,2023-10-19 00:20:24.406000+00:00,West,Southern New Hampshire University,mp3override,False,1898793,23TW3,REVERSE OVERRIDE to ineligible - payment made in error for Walmart Grad program	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NpLrAAAV/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=1898793&page=0&attribute=studentId
-23EW1_2485286,2023-10-19 00:13:33.903000+00:00,West,Southern New Hampshire University,mp3override,True,2485286,23EW1,Walmart exception for promotion to ineligible role	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Np6kqAAB/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=2485286&page=0&attribute=studentId
-202320B2_W00378212,2023-10-19 00:04:51.383000+00:00,West,Wilmington University,mp3override,True,W00378212,202320B2,Data Delay; E9Y		https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Nobw3AAB/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=W00378212&page=0&attribute=studentId
-2235_3163963,2023-10-12 21:36:07.274000+00:00,Radigan,University of Maryland Global Campus,mp3override,True,3163963,2235,Target approved coverage of courses from ineligible program that count towards eligible program ,https://ta-admin.guildeducation.com/member-payments?searchTerm=3163963&page=0&attribute=studentId
-2023-04-24-2023-06-04_21439212,2023-10-11 15:25:28.349000+00:00,Daves,Bellevue University,mp3override,True,21439212,2023-04-24-2023-06-04,"Data Delay
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000LbLSzAAN/view
-",https://ta-admin.guildeducation.com/member-payments?searchTerm=21439212&page=0&attribute=studentId
-2023-06-12-2023-07-23_21439212,2023-10-11 15:22:08.922000+00:00,Daves,Bellevue University,mp3override,True,21439212,2023-06-12-2023-07-23,"Data Delay
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000LbLSzAAN/view
-",https://ta-admin.guildeducation.com/member-payments?searchTerm=21439212&page=0&attribute=studentId
-SU-23_1160572,2023-10-10 16:54:43.110000+00:00,Summers,Mercy College of Ohio,mp3override,True,1160572,SU-23,Late application should be eligible- https://drive.google.com/file/d/17JGcN4i6yI5KWSabQPJd03rQskYPsWBw/view?usp=drive_link,https://ta-admin.guildeducation.com/member-payments?searchTerm=1160572&page=0&attribute=studentId
-SU-23_1162997,2023-10-10 16:51:53.307000+00:00,Summers,Mercy College of Ohio,mp3override,True,1162997,SU-23,Late application should be eligible- https://drive.google.com/file/d/17JGcN4i6yI5KWSabQPJd03rQskYPsWBw/view?usp=drive_link,https://ta-admin.guildeducation.com/member-payments?searchTerm=1162997&page=0&attribute=studentId
-SU-23_1159966,2023-10-10 16:49:02.499000+00:00,Summers,Mercy College of Ohio,mp3override,True,1159966,SU-23,Late application should be eligible- https://drive.google.com/file/d/17JGcN4i6yI5KWSabQPJd03rQskYPsWBw/view?usp=drive_link,https://ta-admin.guildeducation.com/member-payments?searchTerm=1159966&page=0&attribute=studentId
-23MSEM_2955753,2023-10-04 15:37:53.977000+00:00,Daves,Regis University,mp3override,True,2955753,23MSEM,"ART approved after term start. Student didn't realize their program was covered until part way through Fall term. UCH has agreed to pay for their summer classes due to a misunderstanding.
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0QPuAAN/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000tBO3NAAW%2Fview
-",https://ta-admin.guildeducation.com/member-payments?searchTerm=2955753&page=0&attribute=studentId
-202330B2_W00378225,2023-09-29 22:28:15.695000+00:00,West,Wilmington University,mp3override,True,W00378225,202330B2,"Walmart exception for program change
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0BOBAA3/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00378225&page=0&attribute=studentId
-1770_4816681,2023-10-04 18:21:23.888000+00:00,Summers,University of Central Florida,mp3override,True,4816681,1770,"ART approved after term start 
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0GMuAAN/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=4816681&page=0&attribute=studentId
-1770_4816681,2023-09-27 15:58:35.705000+00:00,Daves,University of Central Florida,mp3override,True,4816681,1770,"ART approved after term start 
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0GMuAAN/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=4816681&page=0&attribute=studentId
-202320B2_W00330502,2023-09-27 15:48:31.561000+00:00,Daves,Wilmington University,mp3override,True,W00330502,202320B2,"Internal application error - data delay
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000LoVSIAA3/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00330502&page=0&attribute=studentId
-202320B1_W00330502,2023-09-27 15:47:53.166000+00:00,Daves,Wilmington University,mp3override,True,W00330502,202320B1,"Internal application error - data delay
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000LoVSIAA3/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00330502&page=0&attribute=studentId
-202320B2_W00374936,2023-09-27 15:45:15.248000+00:00,Daves,Wilmington University,mp3override,True,W00374936,202320B2,"Data Delay 
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000LaalTAAR/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00374936&page=0&attribute=studentId
-202320B1_W00369162,2023-09-27 15:43:21.125000+00:00,Daves,Wilmington University,mp3override,True,W00369162,202320B1,"Tyson Exception 
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000NzgIQAAZ/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00369162&page=0&attribute=studentId
-202330B2_W00376727,2023-09-22 22:07:56.217000+00:00,West,Wilmington University,mp3override,True,W00376727,202330B2,"PepsiCo Exception for enrollment into ineligible program
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0b5CAAR/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00376727&page=0&attribute=studentId
-202330B1_W00376727,2023-09-22 22:07:27.675000+00:00,West,Wilmington University,mp3override,True,W00376727,202330B1,"PepsiCo Exception for enrollment into ineligible program
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0b5CAAR/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00376727&page=0&attribute=studentId
-202320B2_W00376727,2023-09-22 22:07:03.932000+00:00,West,Wilmington University,mp3override,True,W00376727,202320B2,"PepsiCo Exception for enrollment into ineligible program
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0b5CAAR/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00376727&page=0&attribute=studentId
-202320B2_W00377911,2023-09-22 22:05:20.588000+00:00,West,Wilmington University,mp3override,True,W00377911,202320B2,"Data Delay
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000O0BY6AAN/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=W00377911&page=0&attribute=studentId
-2223_CNG_Jun_V03903662,2023-08-11 22:47:59.828000+00:00,Radigan,Valencia College Continuing Education,mp3override,True,V03903662,2223_CNG_Jun,PROG_E9Y; incorrect UUID on their ModelM_Public.Student_Profile record,https://ta-admin.guildeducation.com/member-payments?searchTerm=V03903662&page=0&attribute=studentId
-202223SUMMER_MU7535808,2023-08-11 22:16:19.747000+00:00,Kenny-Smith,Southside College of Health Sciences,mp3override,True,MU7535808,202223SUMMER,"Inaccurate data, student showed as GPA ineligible but only because of late file. Confirmed they are eligible. 
-
-https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Ld5lWAAR/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=MU7535808&page=0&attribute=studentId
-2022233_FR6139276,2023-07-26 17:45:53.818000+00:00,Ciarabellini,Saint Anthony College of Nursing,mp3override,True,FR6139276,2022233,Pre-existing student submitted application after term start. EPS has already confirmed approval with the EP (OSF).  ,https://ta-admin.guildeducation.com/member-payments?searchTerm=FR6139276&page=0&attribute=studentId
-2022233_AD1310829,2023-07-26 17:45:31.689000+00:00,Ciarabellini,Saint Anthony College of Nursing,mp3override,True,AD1310829,2022233,Pre-existing student submitted application after term start. EPS has already confirmed approval with the EP (OSF).  ,https://ta-admin.guildeducation.com/member-payments?searchTerm=AD1310829&page=0&attribute=studentId
-2022233_VA1327064,2023-07-26 17:45:07.613000+00:00,Ciarabellini,Saint Anthony College of Nursing,mp3override,True,VA1327064,2022233,Pre-existing student submitted application after term start. EPS has already confirmed approval with the EP (OSF).  ,https://ta-admin.guildeducation.com/member-payments?searchTerm=VA1327064&page=0&attribute=studentId
-2022233_FO3988588,2023-07-26 17:44:50.865000+00:00,Ciarabellini,Saint Anthony College of Nursing,mp3override,True,FO3988588,2022233,Pre-existing student submitted application after term start. EPS has already confirmed approval with the EP (OSF).  ,https://ta-admin.guildeducation.com/member-payments?searchTerm=FO3988588&page=0&attribute=studentId
-2228_1132292,2023-07-26 16:49:37.614000+00:00,Summers,University of Maryland Global Campus,mp3override,True,1132292,2228,Session-level eligibility; started courses before their Guild-approved start date,https://ta-admin.guildeducation.com/member-payments?searchTerm=1132292&page=0&attribute=studentId
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiQ4tAAF/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000rwx4LAAQ%2Fview
+",https://ta-admin.guildeducation.com/member-payments?searchTerm=873715960&page=0&attribute=studentId,Target
+2305B_45522350,2024-02-27 15:07:37.708000+00:00,Kimber,Purdue Global,mp3override,True,45522350,2305B,Charter exception for single course offering	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiLDlAAN/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=45522350&page=0&attribute=studentId,Charter
+2305B_45522350,2024-03-14 15:17:53.632000+00:00,Spingler,Purdue Global,mp3override,True,45522350,2305B,Charter exception for single course offering	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QiLDlAAN/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=45522350&page=0&attribute=studentId,Charter
+2302C_40000052,2024-03-14 15:21:46.416000+00:00,Spingler,Purdue Global,mp3override,True,40000052,2302C,Trilogy exception for program eligibility (legacy student)	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Qi49PAAR/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=40000052&page=0&attribute=studentId,Trilogy Health Services
+2302C_40000052,2024-02-27 15:06:06.175000+00:00,Kimber,Purdue Global,mp3override,True,40000052,2302C,Trilogy exception for program eligibility (legacy student)	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Qi49PAAR/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=40000052&page=0&attribute=studentId,Trilogy Health Services
+202410B2_W00385455,2024-02-27 14:47:31.431000+00:00,Kimber,Wilmington University,mp3override,True,W00385455,202410B2,Data Delay - Guild APO Flagged		https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OqCL5AAN/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=W00385455&page=0&attribute=studentId,Charter
+2023-09-25-2023-11-05_21392167,2024-03-20 15:15:45.523000+00:00,Summers,Bellevue University,mp3override,True,21392167,2023-09-25-2023-11-05,"GPA Data Delay
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QhxOFAAZ/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=21392167&page=0&attribute=studentId,JPMorgan Chase
+2023-09-25-2023-11-05_21392167,2024-02-21 00:18:26.854000+00:00,West,Bellevue University,mp3override,True,21392167,2023-09-25-2023-11-05,"GPA Data Delay
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000QhxOFAAZ/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=21392167&page=0&attribute=studentId,JPMorgan Chase
+1780_5286267,2024-01-29 22:08:55.819000+00:00,West,University of Central Florida,mp3override,True,5286267,1780,Change of employer and still had funds remaining	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Os3SSAAZ/view,https://ta-admin.guildeducation.com/member-payments?searchTerm=5286267&page=0&attribute=studentId,AdventHealth
+202340_950532402,2024-01-19 23:51:41.143000+00:00,West,North Carolina Agricultural and Technical State University,mp3override,True,950532402,202340,Inaccurate program data from LP	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000OodBVAAZ/view?ws=%2Flightning%2Fr%2FContact%2F0035e00000t7iZlAAI%2Fview,https://ta-admin.guildeducation.com/member-payments?searchTerm=950532402&page=0&attribute=studentId,Disney
+G202301_B00638075,2024-01-13 00:19:27.989000+00:00,West,University of Massachusetts Global: MyPath,mp3override,True,B00638075,G202301,"ART approved after term start, override approved anyway	https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Np3xRAAR/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=B00638075&page=0&attribute=studentId,JPMorgan Chase
+202310_@02005596,2023-12-08 22:59:13.522000+00:00,West,Fullerton College,mp3override,True,@02005596,202310,"ART approved after term start but an override was approved
+https://guildeducation3.lightning.force.com/lightning/r/Case/5005e00000Op2VVAAZ/view",https://ta-admin.guildeducation.com/member-payments?searchTerm=@02005596&page=0&attribute=studentId,Disney
